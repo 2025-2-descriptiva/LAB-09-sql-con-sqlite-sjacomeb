@@ -350,7 +350,7 @@ def test_13():
 
     # Round the results to 2 decimal places using ROUND_HALF_UP to avoid banker's rounding
     result['avg(c12)'] = {
-        k: float(Decimal(v).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP))
+        k: float(Decimal(str(v)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP))
         for k, v in result['avg(c12)'].items()
     }
 
