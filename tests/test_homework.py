@@ -1,6 +1,7 @@
 """Autograding script."""
 
 import sqlite3
+from decimal import Decimal, ROUND_HALF_UP
 
 import pandas as pd  # type: ignore
 
@@ -340,7 +341,6 @@ def test_12():
         "MIN(c12)": {0: 135.8, 1: 283.4, 2: 267.42, 3: 317.77, 4: 118.77},
     }
 
-
 def test_13():
     """Test 13."""
     conn, _ = load_data()
@@ -348,8 +348,11 @@ def test_13():
         query = file.read()
     result = pd.read_sql_query(query, conn).to_dict()
 
-    # Round the results to 2 decimal places
-    result['avg(c12)'] = {k: round(v, 2) for k, v in result['avg(c12)'].items()}
+    # Round the results to 2 decimal places using ROUND_HALF_UP to avoid banker's rounding
+    result['avg(c12)'] = {
+        k: float(Decimal(v).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP))
+        for k, v in result['avg(c12)'].items()
+    }
 
     expected = {
         "K0": {0: "A", 1: "B", 2: "C", 3: "D", 4: "E"},
@@ -361,6 +364,7 @@ def test_13():
             4: 474.83,
         },
     }
+    assert result == expected
     assert result == expected
 
 def test_14():

@@ -43,3 +43,10 @@
 -- 
 --  >>> Escriba su codigo a partir de este punto <<<
 --  
+SELECT
+    TRIM(K0) AS K0,
+    ROUND(AVG(c12), 2) AS "avg(c12)"
+FROM tbl1
+WHERE c13 > 400
+GROUP BY TRIM(K0)
+ORDER BY K0;
