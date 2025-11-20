@@ -43,6 +43,7 @@
 -- 
 --  >>> Escriba su codigo a partir de este punto <<<
 --  
+
 SELECT
     TRIM(K0) AS K0,
     ROUND(AVG(c12), 2) AS "avg(c12)"
